@@ -1,14 +1,17 @@
 import React from "react";
 import Note from "./Note";
 
-function NoteLists({ Notelists }) {
+function NoteLists({ Notelists, removeListHandler, filter }) {
   return (
     <>
-      {Notelists?.slice(0).reverse().map((listItem, index) => (
-        <div key={index}>
-          <Note note={listItem} />
-        </div>
-      ))}
+      {Notelists?.slice(0)
+        .reverse()
+        .filter((item) => item.star !== filter)
+        .map((listItem, index) => (
+          <div key={index}>
+            <Note removeListHandler={removeListHandler} note={listItem} />
+          </div>
+        ))}
     </>
   );
 }

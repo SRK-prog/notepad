@@ -19,6 +19,8 @@ function Login() {
       });
       if (response.status === 200) {
         dispatch({ type: "LOG_IN", payload: { user: true } });
+        const data = JSON.stringify({ user: true });
+        localStorage.setItem("user", data);
         navigate("/");
       }
     } catch (err) {
@@ -44,7 +46,9 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
         {error && (
-          <p className="text-red-500 text-center mb-1 text-sm">Something went wrong!</p>
+          <p className="text-red-500 text-center mb-1 text-sm">
+            Something went wrong!
+          </p>
         )}
         <button className="text-white bg-green-500 w-full p-2 rounded">
           Continue
