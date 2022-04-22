@@ -39,7 +39,7 @@ function Note({ note, removeListHandler }) {
   };
 
   return (
-    <div {...bind()} className="bg-slate-100 mt-3 mx-3 px-4 py-3 rounded">
+    <div {...bind} className="bg-slate-100 mt-3 mx-3 px-4 py-3 rounded">
       <div className="flex mb-4">
         <Link className="w-full" to={"/details/" + note?._id}>
           <div className="text-slate-900 text-xl font-semibold">
