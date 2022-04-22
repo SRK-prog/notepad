@@ -1,19 +1,17 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import moment from "moment-timezone";
 import { format } from "timeago.js";
 import axios from "axios";
-import { useLongPress } from "use-long-press";
+import ClickNHold from "react-click-n-hold";
+import { useNavigate } from "react-router-dom";
 
 function Note({ note, removeListHandler }) {
   const [stared, setStared] = useState(note?.star);
   const [togglePopUp, setTogglePopUp] = useState(false);
+  const navigate = useNavigate();
 
-  const bind = useLongPress(() => {
-    setTogglePopUp(true);
-  });
-
-  const starHandler = async () => {
+  const starHandler = async (e) => {
+    e.stopPropagation();
     setStared(!stared);
     try {
       const response = await axios.put(
@@ -39,25 +37,32 @@ function Note({ note, removeListHandler }) {
   };
 
   return (
-    <div {...bind} className="bg-slate-100 mt-3 mx-3 px-4 py-3 rounded">
-      <div className="flex mb-4">
-        <Link className="w-full" to={"/details/" + note?._id}>
-          <div className="text-slate-900 text-xl font-semibold">
-            {note?.Title}
+    <div className="bg-slate-100 mt-3 mx-3 px-4 py-3 rounded">
+      <ClickNHold time={0.8} onClickNHold={() => setTogglePopUp(true)}>
+        <>
+          <div
+            onClick={() => navigate("/details/" + note?._id)}
+            className="flex mb-4"
+          >
+            <span className="w-full">
+              <div className="text-slate-900 text-xl font-semibold">
+                {note?.Title}
+              </div>
+            </span>
+            <div onClick={starHandler}>
+              <i
+                className={`fa-solid fa-star cursor-pointer ${
+                  stared ? "text-teal-600" : "text-slate-300"
+                }`}
+              ></i>
+            </div>
           </div>
-        </Link>
-        <div onClick={starHandler}>
-          <i
-            className={`fa-solid fa-star cursor-pointer ${
-              stared ? "text-teal-600" : "text-slate-300"
-            }`}
-          ></i>
-        </div>
-      </div>
-      <div className="flex justify-between text-xs">
-        <div>{moment(note?.createdAt).format("DD/MM/YYYY")}</div>
-        <div>{format(note?.updated || note?.updatedAt)}</div>
-      </div>
+          <div className="flex justify-between text-xs">
+            <div>{moment(note?.createdAt).format("DD/MM/YYYY")}</div>
+            <div>{format(note?.updated || note?.updatedAt)}</div>
+          </div>
+        </>
+      </ClickNHold>
       {togglePopUp && (
         <div className="flex justify-end gap-3 mt-3">
           <span

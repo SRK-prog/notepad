@@ -7,6 +7,7 @@ import NoteLists from "../components/NoteLists";
 function Home() {
   const [newData, setNewData] = useState();
   const [stared, setStared] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       const { data } = await axios.get(
