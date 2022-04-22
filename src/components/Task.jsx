@@ -8,8 +8,10 @@ function Task({ lists, addTaskHandler }) {
   const taskAdd = (e) => {
     e.preventDefault();
     const splited = newTask.split(" ");
-    addTaskHandler(splited);
-    setNewTask("");
+    if (splited[0] && splited[1]) {
+      addTaskHandler(splited);
+      setNewTask("");
+    }
   };
 
   return (
@@ -20,13 +22,13 @@ function Task({ lists, addTaskHandler }) {
           <div onClick={() => setEditMode(!editMode)}>Edit</div>
         </div>
         <div className="bg-white h-[300px] mx-3 mt-3 rounded py-2 px-4 overflow-auto">
-          {lists.map((item, index) => (
+          {lists?.map((item, index) => (
             <div
               className="h-8 flex items-center border-b border-slate-200 justify-between"
               key={index}
             >
-              <span>{item.task}</span>
-              <span className="text-slate-600 text-sm">{item.label}</span>
+              <span>{item?.amount}</span>
+              <span className="text-slate-600 text-sm">{item?.label}</span>
             </div>
           ))}
         </div>

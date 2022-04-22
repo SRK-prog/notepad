@@ -1,27 +1,37 @@
 import { useState } from "react";
-
+import axios from "axios";
 function AddTodo({ addListHandler }) {
   const [taskClick, setTaskClick] = useState(false);
   const [taskname, setTaskName] = useState("");
-
-  const doneHandler = () => {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); 
-    var yyyy = today.getFullYear();
-    today = mm + "/" + dd + "/" + yyyy;
+  const doneHandler = async (e) => {
+    e.preventDefault();
+    var today = new Date(Date.now());
     addListHandler({
       Title: taskname,
       updated: today,
       created: today,
       star: false,
     });
-    setTaskClick(false)
+    setTaskClick(false);
+    try {
+      const { data } = await axios.post(
+        process.env.REACT_APP_NODE_URL + "lists",
+        {
+          Title: taskname,
+        }
+      );
+      console.log(data);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>
       {taskClick ? (
-        <form onSubmit={doneHandler} className="h-10 flex items-center bg-[#6EAF8B] mt-2 px-3 mx-2 cursor-pointer">
+        <form
+          onSubmit={doneHandler}
+          className="h-10 flex items-center bg-[#6EAF8B] mt-2 px-3 mx-2 cursor-pointer"
+        >
           <i
             onClick={() => setTaskClick(false)}
             className="fa-solid fa-xmark text-white mr-4"

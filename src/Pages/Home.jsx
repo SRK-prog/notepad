@@ -1,21 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Header from "../components/Header";
 import AddTodo from "../components/AddTodo";
 import NoteLists from "../components/NoteLists";
-const data = [
-  {
-    Title: "Balance",
-    updated: "1 hour ago",
-    created: "09 07 2020",
-    star: false,
-  },
 
-];
 function Home() {
-  const [newData, setNewData] = useState(data);
+  const [newData, setNewData] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get(process.env.REACT_APP_NODE_URL + "lists");
+      setNewData(data);
+    };
+    fetchData();
+  }, []);
 
   const addListHandler = (request) => {
-    setNewData([request, ...newData]);
+    setNewData([...newData, request]);
   };
   return (
     <div className="h-screen">
