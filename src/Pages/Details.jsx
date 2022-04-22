@@ -23,12 +23,11 @@ function Details() {
     const newValue = eval(value[0]);
     setNewTask([...newTask, { amount: newValue, label: value[1] }]);
     try {
-      const { data } = await axios.post("http://localhost:5000/notes", {
+      await axios.post(process.env.REACT_APP_NODE_URL + "notes", {
         amount: newValue,
         listId: path,
         label: value[1],
       });
-      console.log(data);
     } catch (err) {
       console.log(err);
     }

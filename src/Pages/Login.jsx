@@ -1,21 +1,28 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 function Login() {
   let navigate = useNavigate();
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(false);
+  const dispatch = useDispatch();
+
   const loginHandler = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post("http://localhost:5000/", {
+      const response = await axios.post(process.env.REACT_APP_NODE_URL, {
         name,
         password,
       });
-     data && navigate("/");
+      if (response.status === 200) {
+        dispatch({ type: "LOG_IN", payload: { user: true } });
+        navigate("/");
+      }
     } catch (err) {
-      console.log(err);
+      setError(true);
     }
   };
   return (
@@ -36,6 +43,9 @@ function Login() {
           placeholder="password"
           onChange={(e) => setPassword(e.target.value)}
         />
+        {error && (
+          <p className="text-red-500 text-center mb-1 text-sm">Something went wrong!</p>
+        )}
         <button className="text-white bg-green-500 w-full p-2 rounded">
           Continue
         </button>
