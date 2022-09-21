@@ -5,7 +5,21 @@
 body {
   font-family: Inter, "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
     Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
 
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
+
+div#root {
+  height: 100%;
+}
+
+.bg-gredient {
   background: rgb(153, 204, 171);
   background: linear-gradient(
     112deg,

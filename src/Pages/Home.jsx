@@ -35,7 +35,7 @@ function Home() {
     setNewData([...newData, request]);
   };
   return (
-    <div className="h-screen">
+    <div className="bg-gredient min-h-full">
       <Header showStaredHandler={showStaredHandler} />
       <AddTodo addListHandler={addListHandler} />
       <NoteLists

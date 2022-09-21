@@ -33,7 +33,7 @@ function Details() {
     }
   };
   return (
-    <div className="gredient h-screen">
+    <div className="bg-gredient min-h-full">
       <Header />
       <Task lists={newTask} addTaskHandler={addTaskHandler} />
     </div>

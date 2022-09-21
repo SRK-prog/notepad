@@ -1,6 +1,6 @@
 const data =
-  localStorage.getItem("user") != null
-    ? JSON.parse(localStorage.getItem("user"))
+  localStorage.getItem("balance-notes") != null
+    ? JSON.parse(localStorage.getItem("balance-notes"))
     : { user: false };
 
 export default function userReducer(state = data, action) {

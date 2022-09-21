@@ -12,12 +12,13 @@ function Note({ note, removeListHandler }) {
 
   const starHandler = async (e) => {
     e.stopPropagation();
+    note["star"] = !note?.star;
     setStared(!stared);
     try {
       const response = await axios.put(
         process.env.REACT_APP_NODE_URL + "lists/" + note?._id,
         {
-          star: !note?.star,
+          star: !stared,
         }
       );
       console.log(response);
@@ -37,7 +38,7 @@ function Note({ note, removeListHandler }) {
   };
 
   return (
-    <div className="bg-slate-100 mt-3 mx-3 px-4 py-3 rounded">
+    <div className="bg-slate-100 mt-3 mx-3 px-4 py-3 rounded cursor-pointer">
       <ClickNHold time={0.8} onClickNHold={() => setTogglePopUp(true)}>
         <>
           <div
@@ -45,19 +46,19 @@ function Note({ note, removeListHandler }) {
             className="flex mb-4"
           >
             <span className="w-full">
-              <div className="text-slate-900 text-xl font-semibold">
+              <div className="text-slate-900 text-xl font-semibold select-none">
                 {note?.Title}
               </div>
             </span>
             <div onClick={starHandler}>
               <i
                 className={`fa-solid fa-star cursor-pointer ${
-                  stared ? "text-teal-600" : "text-slate-300"
+                  note?.star ? "text-teal-600" : "text-slate-300"
                 }`}
               ></i>
             </div>
           </div>
-          <div className="flex justify-between text-xs">
+          <div className="flex justify-between text-xs select-none">
             <div>{moment(note?.createdAt).format("DD/MM/YYYY")}</div>
             <div>{format(note?.updated || note?.updatedAt)}</div>
           </div>

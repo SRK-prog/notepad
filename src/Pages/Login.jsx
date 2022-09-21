@@ -20,7 +20,7 @@ function Login() {
       if (response.status === 200) {
         dispatch({ type: "LOG_IN", payload: { user: true } });
         const data = JSON.stringify({ user: true });
-        localStorage.setItem("user", data);
+        localStorage.setItem("balance-notes", data);
         navigate("/");
       }
     } catch (err) {
@@ -28,7 +28,7 @@ function Login() {
     }
   };
   return (
-    <div className="w-full h-screen pt-40 px-5">
+    <div className="w-full bg-gredient min-h-full pt-40 px-5">
       <form
         className="mx-auto p-5 max-w-sm bg-white rounded"
         onSubmit={loginHandler}
